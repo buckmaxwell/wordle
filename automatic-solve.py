@@ -38,8 +38,9 @@ with sync_playwright() as p:
         page.keyboard.press('Enter')
 
         # Check guess feedback
-        context.storage_state(path="state.json")
-        browser_state = open("state.json")
+        browser_state_path = "state.json"
+        context.storage_state(path=browser_state_path)
+        browser_state = open(browser_state_path)
         browser_state_json = json.load(browser_state)
         all_guess_feedback = json.loads(browser_state_json['origins'][0]['localStorage'][0]['value'])['evaluations']
         recent_guess_feedback = [i for i in all_guess_feedback if i][-1]
@@ -58,3 +59,5 @@ with sync_playwright() as p:
 
     # Keep browser open long enough to see results
     time.sleep(20)
+
+    context.close()
