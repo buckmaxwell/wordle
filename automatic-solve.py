@@ -30,7 +30,7 @@ with sync_playwright() as p:
     feedback_solver_format = '-----'
     remaining_guesses = 6
 
-    while (feedback_solver_format != 'xxxxxx' or remaining_guesses > 0):
+    while (feedback_solver_format != 'xxxxx' or remaining_guesses > 0):
 
         # Enter guess
         guess = puzzle.next_guess()
