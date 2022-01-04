@@ -2,8 +2,7 @@ from solver import Solver
 
 puzzle = Solver()
 
-# 6 Tries
-for _ in range(0, 5):
+for _ in range(6):
     print("I will guess", puzzle.next_guess())
     # '----- -- all wrong
     # 'xxxxx' -- all right
