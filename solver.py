@@ -12,13 +12,13 @@ class Solver:
     def next_guess(self):
         return self.guess
 
-    def get_next_guess(self, info):
+    def get_next_guess(self, feedback):
         for i, letter in enumerate(self.guess):
 
-            if info[i] == "-":
+            if feedback[i] == "-":
                 # WRONG: Remove words with this letter
                 self.context = [w for w in self.context if not letter in w]
-            elif info[i] == "!":
+            elif feedback[i] == "!":
                 # RIGHT LETTER: Remove words with letter in this place
                 self.context = [w for w in self.context if not w[i] == letter]
                 # Remove words without this letter
@@ -27,6 +27,4 @@ class Solver:
                 # CORRECT: Remove words that don't have this letter in this position
                 self.context = [w for w in self.context if w[i] == letter]
         self.guess = self.context[0]
-
-
 
