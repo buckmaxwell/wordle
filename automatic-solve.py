@@ -1,3 +1,4 @@
+import time
 from solver import Solver
 puzzle = Solver()
 
@@ -8,3 +9,14 @@ with sync_playwright() as p:
     context = browser.new_context()
     page = context.new_page()
     page.goto("https://www.powerlanguage.co.uk/wordle/")
+
+    # Dismiss instructions popup
+    page.click("game-modal svg")
+
+    # Enter guess
+    guess = 'group'
+    page.keyboard.type(guess)
+    page.keyboard.press('Enter')
+
+    # Keep browser open
+    time.sleep(20)
