@@ -33,8 +33,7 @@ with sync_playwright() as p:
     while (feedback_solver_format != 'xxxxx' or remaining_guesses > 0):
 
         # Enter guess
-        guess = puzzle.next_guess()
-        page.keyboard.type(guess)
+        page.keyboard.type(puzzle.guess)
         page.keyboard.press('Enter')
 
         # Check guess feedback
@@ -51,7 +50,7 @@ with sync_playwright() as p:
         remaining_guesses = len([i for i in all_guess_feedback if not i])
 
         # Generate the next guess
-        puzzle.get_next_guess(feedback_solver_format)
+        puzzle.set_next_guess(feedback_solver_format)
 
         # Some time between tries to appreciate the visuals
         # (also not doing this causes it to progress too fast and crash)
