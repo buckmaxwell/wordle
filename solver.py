@@ -1,5 +1,6 @@
 from random import choice
 
+
 class Solver:
     def __init__(self):
         self.words = []
@@ -9,10 +10,7 @@ class Solver:
         self.context = self.words.copy()
         self.guess = choice(self.words[:1000])
 
-    def next_guess(self):
-        return self.guess
-
-    def get_next_guess(self, feedback):
+    def set_next_guess(self, feedback):
         for i, letter in enumerate(self.guess):
 
             if feedback[i] == "-":
@@ -28,3 +26,32 @@ class Solver:
                 self.context = [w for w in self.context if w[i] == letter]
         self.guess = self.context[0]
 
+
+if __name__ == "__main__":
+    # Test performance
+
+    def get_feedback(answer, guess):
+        result = len(answer) * ["-"]
+        for i, letter in enumerate(guess):
+            if letter in answer:
+                result[i] = "!"
+            if letter == answer[i]:
+                result[i] = "x"
+        return "".join(result)
+
+    numbers_of_tries = []
+    solver = Solver()
+    for answer in solver.words[:500] + solver.words[len(solver.words) - 500 :]:
+        puzzle = Solver()
+        for number_of_tries in range(1, 8):
+            if number_of_tries > 7:
+                raise Exception("Did not get word")
+            if puzzle.guess == answer:
+                numbers_of_tries.append(number_of_tries)
+                break
+            feedback = get_feedback(answer, puzzle.guess)
+            puzzle.set_next_guess(feedback)
+
+    print(
+        f"Guessed 1000 words correctly in {sum(numbers_of_tries)}, {sum(numbers_of_tries) / 1000} tries on average"
+    )
